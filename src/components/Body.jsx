@@ -34,7 +34,7 @@ const Body = () => {
  fetchUser()
     }
     
-  },[])
+  },[userData])
   return (
     <div>
      <NavBar/>
