@@ -27,6 +27,8 @@ if(feed) return
  useEffect(()=>{
   getFeed()
  },[])
+ if(!feed) return
+ if(feed.length<=0) return <h1> Feed is empty</h1>
   return (
     <div className='flex justify-center'>
       {feed&&<UserCard user={feed[0]} />}
