@@ -17,7 +17,7 @@ const Login = () => {
   const [lastName, setLastName] = useState("");
   const [isLoginForm, setIsLoginForm] = useState(true);
 
-  if (user) return <Navigate to="/" replace />;
+  if (user&&isLoginForm) return <Navigate to="/" replace />;
 
   const handleSignUp = async () => {
     try {
