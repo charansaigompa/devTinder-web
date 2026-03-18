@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { createSocketConnection } from "../utils/socket";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
+
 
 const Chat = () => {
   const { targetUserId } = useParams();
@@ -9,6 +12,25 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const userId = user?._id;
+
+  const fetchChatMessages=async()=>{
+    const chat=await axios.get(BASE_URL+"/chat/"+targetUserId,{withCredentials:true})
+    const chatMessages=chat?.data?.messages.map((msg)=>{
+      const{senderId,text}=msg
+      return{
+        firstName:senderId?.firstName,
+        lastName:senderId?.lastName,
+        text,
+      }
+    })
+    setMessages(chatMessages)
+  }
+
+  useEffect(()=>{
+    fetchChatMessages()
+  },[targetUserId])
+
+
   useEffect(() => {
     if (!userId || !targetUserId) return;
     const socket = createSocketConnection();
@@ -42,14 +64,14 @@ const sendMessage=()=>{
 }
 
   return (
-    <div className="w-1/2 mx-auto border border-gray-600 h-[80vh] m-5 mb-20 flex flex-col rounded">
+    <div className="w-3/4 mx-auto border border-gray-600 h-[80vh] m-5 mb-20 flex flex-col rounded">
       <h1 className="p-5 border-b border-b-gray-600">Chat</h1>
       <div className="p-5 flex-1 overflow-scroll">
         {messages.map((msg, index) => {
           return (
-            <div key={index} className="chat chat-start">
+            <div key={index} className={"chat "+(msg.firstName===user.firstName?"chat-end":"chat-start")}>
               <div className="chat-header">
-                {msg?.firstName}
+                {`${msg?.firstName} ${msg?.lastName}`}
                 <time className="text-xs opacity-50">2 hours ago</time>
               </div>
               <div className="chat-bubble">{msg?.text}</div>
