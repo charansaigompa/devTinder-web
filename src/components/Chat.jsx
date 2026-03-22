@@ -70,12 +70,12 @@ const sendMessage=()=>{
         {messages.map((msg, index) => {
           return (
             <div key={index} className={"chat "+(msg.firstName===user.firstName?"chat-end":"chat-start")}>
-              <div className="chat-header">
+              <div className="chat-header mb-2">
                 {`${msg?.firstName} ${msg?.lastName}`}
-                <time className="text-xs opacity-50">2 hours ago</time>
+                
               </div>
               <div className="chat-bubble">{msg?.text}</div>
-              <div className="chat-footer opacity-50">Seen</div>
+              
             </div>
           );
         })}
