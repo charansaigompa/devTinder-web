@@ -26,34 +26,50 @@ const Connections = () => {
     if(connections.length===0) return <h1>No connections found</h1>
 
   return (
-    <div className='text-center my-10'>
-        <h1 className="text-bold text-3xl">Connections</h1>
-     {connections.map((connection)=>{
-            const{_id,firstName,lastName,photoUrl,about,gender,age}=connection
-            return(
-                
-                <div key={_id} className='flex m-4 p-2 bg-base-300 w-1/2 mx-auto rounded-lg justify-between'>
-                      <div className='flex'>
-                        <div>
-                        <img className="w-20 h-20 rounded-full" src={photoUrl} alt="" />
-                    </div>
-                    <div className='text-left mx-4'>
-                        <h1 className='font-bold text-lg'>{firstName+" "+lastName}</h1>
-                        {age&&gender&& <p>{age+" "+gender}</p>}
-                        <p>{about}</p>
-                    </div>
-                      </div>
-                    
-                    <div className='flex items-center p-2'>
-                       <Link to={"/chat/"+_id} >
-                        <button className='btn btn-primary '>Chat</button></Link>
-                    </div>
-                </div>
-            )
-     })}
-      
-    </div>
-  )
+  <div className="text-center my-10 px-3">
+    <h1 className="font-bold text-2xl sm:text-3xl">Connections</h1>
+
+    {connections.map((connection) => {
+      const { _id, firstName, lastName, photoUrl, about, gender, age } = connection;
+
+      return (
+        <div
+          key={_id}
+          className="flex flex-col sm:flex-row items-center sm:justify-between m-4 p-4 bg-base-300 w-full max-w-2xl mx-auto rounded-lg gap-4"
+        >
+          
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 text-center sm:text-left">
+            
+            <img
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-full"
+              src={photoUrl}
+              alt=""
+            />
+
+            <div>
+              <h1 className="font-bold text-lg">
+                {firstName + " " + lastName}
+              </h1>
+
+              {age && gender && <p>{age + " " + gender}</p>}
+
+              <p className="text-sm">{about}</p>
+            </div>
+          </div>
+
+          
+          <div>
+            <Link to={"/chat/" + _id}>
+              <button className="btn btn-primary w-full sm:w-auto">
+                Chat
+              </button>
+            </Link>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+);
 }
 
 export default Connections
